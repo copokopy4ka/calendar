@@ -37,6 +37,7 @@ export const UserEventForm: FC<UserEventFormProps> = ({
     control,
     handleClearTitle,
     handleReturnExistingDescription,
+    handleChangeTime,
     subtitle,
     isDisabledSubmitButton,
     title,
@@ -95,7 +96,7 @@ export const UserEventForm: FC<UserEventFormProps> = ({
               {...register('time', {
                 minLength: { value: 5, message: ERROR_MESSAGES.INCORRECT_TIME },
               })}
-              isOpen={isOpen}
+              handleChangeTime={handleChangeTime}
             />
           </div>
         </div>

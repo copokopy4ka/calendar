@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { CSSProperties, FC, PropsWithChildren, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import './style.scss';
@@ -6,10 +6,12 @@ import './style.scss';
 interface ModalProps {
   id: string;
   isOpen: boolean;
+  isNotFirstModal?: boolean;
   handleClose: () => void;
+  backdropStyle?: CSSProperties;
 }
 
-export const Modal: FC<PropsWithChildren<ModalProps>> = ({ id, isOpen, handleClose, children }) => {
+export const Modal: FC<PropsWithChildren<ModalProps>> = ({ id, isOpen, handleClose, backdropStyle, children }) => {
   const [modalRoot, setModalRoot] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -29,7 +31,7 @@ export const Modal: FC<PropsWithChildren<ModalProps>> = ({ id, isOpen, handleClo
     createPortal(
       <>
         {children}
-        <div onClick={handleClose} className={clsx('modal-backdrop', { open: isOpen })} />
+        <div onClick={handleClose} className={clsx('modal-backdrop', { open: isOpen })} style={backdropStyle} />
       </>,
       modalRoot
     )

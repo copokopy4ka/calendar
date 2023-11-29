@@ -50,7 +50,17 @@ export interface UseUserEventFormResponse {
   reset: UseFormReset<FieldValues>;
   handleClearTitle: () => void;
   handleReturnExistingDescription: () => void;
+  handleChangeTime: (time: string) => void;
   subtitle: string | undefined;
   isDisabledSubmitButton: boolean;
   title: string;
+}
+
+export interface UseTimePickerResponse {
+	time: string | null;
+	hour: string | null;
+	minute: string | null;
+	handlePickHour: (hour: string) => void;
+	handlePickMinute: (minute: string) => void;
+	handleConfirm: () => void;
 }
