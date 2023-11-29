@@ -9,7 +9,7 @@ This is the 'Calendar' project, a web application designed to help users manage 
 - Interactive calendar view
 - Add, edit, and delete events
 - User-friendly interface
-- ✨Magic of time traveling✨
+- ✨ Magic of time traveling! ✨
 
 ## Technology Stack
 
