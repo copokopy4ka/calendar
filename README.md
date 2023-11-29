@@ -1,46 +1,57 @@
-# Getting Started with Create React App
+# Calendar Project
+## _A great app for reminding of important things! It's basically about time travel, because you're contacting yourself in the future…_
+_Developed by a person you will work with in the future,  hopefully ;)_
+## Description
+This is the 'Calendar' project, a web application designed to help users manage their schedules and events effectively. The application offers an intuitive interface for tracking appointments, reminders, and important dates.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Key Features
 
-## Available Scripts
+- Interactive calendar view
+- Add, edit, and delete events
+- User-friendly interface
+- ✨Magic of time traveling✨
 
-In the project directory, you can run:
+## Technology Stack
 
-### `npm start`
+This project is built using the following technologies:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **React**: A JavaScript library for building user interfaces.
+- **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
+- **Redux Toolkit**: A toolset for efficient Redux development.
+- **Sass**: A preprocessor scripting language that is interpreted or compiled into CSS.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Installation and Setup
 
-### `npm test`
+The recommended version of [Node.js](https://nodejs.org/) to run is 18+.
+To get this project up and running on your local machine, follow these steps:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
+    ```bash
+	git clone https://github.com/copokopy4ka/calendar.git
+2. Navigate to the project directory:
+	```bash
+	cd calendar
+3. Install dependencies:
+	```bash
+	npm install
+4. Start the development server:
+	```bash
+	npm start
+The application should now be running on http://localhost:3000.
 
-### `npm run build`
+## Usage
+After starting the application, you can:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- View the calendar on the main page. You will be able to appreciate the beautiful interface and will definitely enjoy using it.
+- Select a day in the calendar by clicking on it, and you can add an event for that day by clicking on the blue button with a plus sign in the upper left.
+- In order to change an already created event, just click on it and change any fields in the input form. You can also delete this event here.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> When the work on the project was almost finished, I turned to
+> the best Quality Assurance for UI/UX testing - my Mom!
+> I asked to look at the app in the browser
+> (with which she is very careful not to delete anything on the Internet..),
+> to understand what it is in front of her and what it can do, and gave no hints!
+> The application passed the quality check with almost no comments,
+> so our Calendar is recommended by my Mom.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+_✨ I wish you all the best. ✨_

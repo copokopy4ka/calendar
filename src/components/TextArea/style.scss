@@ -1,0 +1,99 @@
+@import 'shared/styles/variables';
+
+.textarea {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+
+    &.error {
+      .textarea__label {
+        color: $red;
+      }
+
+      .textarea__fake-textarea-border,
+      .textarea__fake-textarea-border::after {
+        background-color: $red;
+      }
+    }
+  }
+
+  &__label {
+    cursor: pointer;
+    width: fit-content;
+    color: $gray;
+    font-size: 12px;
+    &.error {
+      color: $red;
+    }
+  }
+
+  &__textarea {
+    display: block;
+    width: 100%;
+
+    &::placeholder {
+      color: $gray;
+    }
+
+    &:focus + .textarea__fake-textarea-border::after,
+    &:focus ~ .textarea__fake-textarea-border::after {
+      transform: rotateY(0);
+    }
+  }
+
+  &__fake-textarea-border {
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    left: 0;
+    top: 100%;
+    background-color: $light-gray;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      left: 0;
+      top: 0;
+      background-color: $blue;
+      transition: transform 0.2s linear;
+      transform: rotateY(90deg);
+      transform-origin: left;
+      z-index: 2;
+    }
+  }
+
+  &__end-button {
+    padding: 2px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    bottom: 5px;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background-color: $green;
+    transition: border-color 0.1s linear;
+
+    & svg {
+      width: 18px;
+      height: 18px;
+    }
+    &:hover {
+      border-color: $gray;
+    }
+  }
+
+  &__error-message {
+    position: absolute;
+    left: 0px;
+    top: calc(100% + 4px);
+    color: $red;
+    font-size: 12px;
+  }
+}

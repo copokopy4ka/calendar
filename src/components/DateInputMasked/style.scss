@@ -1,0 +1,68 @@
+@import 'shared/styles/variables';
+
+.date-input {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  position: relative;
+
+  &.error {
+    .date-input__label {
+      color: $red;
+    }
+
+    .date-input__fake-input-border,
+    .date-input__fake-input-border::after {
+      background-color: $red;
+    }
+  }
+
+  &__label {
+    cursor: pointer;
+    width: fit-content;
+    color: $gray;
+    font-size: 12px;
+  }
+
+  &__input {
+    position: relative;
+    &::placeholder {
+      color: $gray;
+    }
+
+    &:focus + .date-input__fake-input-border::after,
+    &:focus ~ .date-input__fake-input-border::after {
+      transform: rotateY(0);
+    }
+  }
+
+  &__fake-input-border {
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    left: 0;
+    top: 100%;
+    background-color: $light-gray;
+    &::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      left: 0;
+      top: 0;
+      background-color: $blue;
+      transition: transform 0.2s linear;
+      transform: rotateY(90deg);
+      transform-origin: left;
+      z-index: 2;
+    }
+  }
+
+  &__error-message {
+    position: absolute;
+    left: 0px;
+    top: calc(100% + 4px);
+    color: $red;
+    font-size: 12px;
+  }
+}
