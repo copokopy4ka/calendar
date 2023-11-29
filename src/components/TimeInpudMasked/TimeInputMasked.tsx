@@ -1,19 +1,24 @@
 import clsx from 'clsx';
-import { FC, ForwardedRef, forwardRef, useCallback } from 'react';
+import { FC, ForwardedRef, forwardRef, useCallback, useRef } from 'react';
 import { Control, Controller, FieldValues } from 'react-hook-form';
 import { isValidTimeInput } from 'utils/helpers';
 import { ReactComponent as ClockIcon } from 'assets/clock-icon.svg';
 import './style.scss';
+import { TimePickerModal } from 'components/TimeInpudMasked/TimePickerModal/TimePickerModal';
+import { useModal } from 'shared/hooks/useModal';
 
 interface TimeInputMaskedProps {
   name: string;
   control: Control<FieldValues, any>;
   errorMessage: string;
-  isOpen: boolean;
+  handleChangeTime: (timeValue: string) => void;
 }
 
 export const TimeInputMasked: FC<TimeInputMaskedProps> = forwardRef(
-  ({ name, control, errorMessage }, ref: ForwardedRef<HTMLInputElement>) => {
+  ({ name, control, errorMessage, handleChangeTime }, ref: ForwardedRef<HTMLInputElement>) => {
+    const { open: openTimeModal, close: closeTimeModal, isOpen: isOpenTimeModal } = useModal();
+    const timeInputBlockRef = useRef(null);
+
     const validateChange = useCallback((value: string, prevValue: string) => {
       if (value.length === 3 && value.at(-1) !== ':') {
         value = `${value.slice(0, 2)}:${value.slice(2)}`;
@@ -32,7 +37,7 @@ export const TimeInputMasked: FC<TimeInputMaskedProps> = forwardRef(
         name={name}
         render={({ field: { value, onChange } }) => {
           return (
-            <div className={clsx('time-input', { error: !!errorMessage })}>
+            <div ref={timeInputBlockRef} className={clsx('time-input', { error: !!errorMessage })}>
               <label className={clsx('time-input__label')} htmlFor={name}>
                 Begin time
               </label>
@@ -48,9 +53,15 @@ export const TimeInputMasked: FC<TimeInputMaskedProps> = forwardRef(
                 maxLength={5}
                 autoComplete='off'
               />
-              <ClockIcon className={clsx('time-input__end-icon')} />
+              <ClockIcon className={clsx('time-input__end-icon')} onClick={openTimeModal} />
               {errorMessage && <p className={clsx('time-input__error-message')}>{errorMessage}</p>}
               <div className={clsx('time-input__fake-input-border')} />
+              <TimePickerModal
+                anchorEl={timeInputBlockRef.current}
+                isOpen={isOpenTimeModal}
+                handleClose={closeTimeModal}
+                handleChangeTime={handleChangeTime}
+              />
             </div>
           );
         }}

@@ -81,6 +81,7 @@ export const useUserEventForm = (
     handleSubmit,
     reset,
     setValue,
+    getValues,
     watch,
     formState: { errors },
   } = useForm<FieldValues>({ defaultValues: userEventFormDefaultValues });
@@ -104,6 +105,14 @@ export const useUserEventForm = (
     currentEventDescription && setValue('description', currentEventDescription);
   }, [currentEventDescription, setValue]);
 
+  const handleChangeTime = useCallback(
+    (time: string) => {
+      const currentValues = getValues();
+      reset({ ...currentValues, time });
+    },
+    [getValues, reset]
+  );
+
   useEffect(() => {
     reset(formValues);
   }, [formValues, reset]);
@@ -115,8 +124,12 @@ export const useUserEventForm = (
   }, [formValues, isOpen, reset]);
 
   useEffect(() => {
-    if (eventData && isOpen) {
-      setTitle('Edit Your event');
+    if (isOpen) {
+      if (eventData) {
+        setTitle('Edit Your event');
+      } else {
+        setTitle('Add new event');
+      }
     }
   }, [eventData, isOpen]);
 
@@ -129,6 +142,7 @@ export const useUserEventForm = (
     reset,
     handleClearTitle,
     handleReturnExistingDescription,
+    handleChangeTime,
     subtitle,
     isDisabledSubmitButton,
     title,

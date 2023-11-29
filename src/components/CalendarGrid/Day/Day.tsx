@@ -8,7 +8,7 @@ interface DayProps {
   dayData: MonthGridItem;
   handleDayClick: (data: MonthActiveDay) => void;
   activeDay: MonthActiveDay | null;
-	handleEventClick: (userEvent: UserEvent) => void;
+  handleEventClick: (userEvent: UserEvent) => void;
 }
 
 export const Day: FC<DayProps> = ({ dayData, handleDayClick, activeDay, handleEventClick }) => {

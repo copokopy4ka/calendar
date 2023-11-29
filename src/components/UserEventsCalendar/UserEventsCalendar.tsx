@@ -8,15 +8,8 @@ import { useHandleUserEvent } from 'shared/hooks/useHandleUserEvent';
 
 export const UserEventsCalendar = () => {
   const { daysList, selectedDay, handleDayClick } = useMonthDaysData();
-  const {
-		selectedEvent,
-		open,
-		isOpen,
-		close,
-		handleEventClick,
-		handleSubmitForm,
-		handleDeleteEvent
-	} = useHandleUserEvent();
+  const { selectedEvent, open, isOpen, close, handleEventClick, handleSubmitForm, handleDeleteEvent } =
+    useHandleUserEvent();
 
   return (
     <div className={clsx('user-events-calendar')}>
@@ -27,14 +20,16 @@ export const UserEventsCalendar = () => {
         handleDayClick={handleDayClick}
         handleEventClick={handleEventClick}
       />
-      {selectedDay && <UserEventFormModal
-        isOpen={isOpen}
-        handleClose={close}
-        onSubmit={handleSubmitForm}
-        userEventData={selectedEvent}
-        handleDeleteEvent={handleDeleteEvent}
-				selectedDay={selectedDay}
-      />}
+      {selectedDay && (
+        <UserEventFormModal
+          isOpen={isOpen}
+          handleClose={close}
+          onSubmit={handleSubmitForm}
+          userEventData={selectedEvent}
+          handleDeleteEvent={handleDeleteEvent}
+          selectedDay={selectedDay}
+        />
+      )}
     </div>
   );
 };

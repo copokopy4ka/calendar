@@ -32,5 +32,6 @@ export const useInitialConfigurations = () => {
       storage.update(SETTINGS.LAST_VIEWED_DATE, currentDate);
       dispatch(updateCurrentDate(currentDate));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
