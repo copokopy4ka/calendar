@@ -28,7 +28,7 @@
   }
   &__text {
     position: relative;
-    padding: 0;
+    // padding: 0;
     line-height: 1;
     &:before {
       content: '';
@@ -39,6 +39,7 @@
       height: 2px;
       background: $light-gray;
       transform: rotateY(-90deg);
+      transform-origin: left;
       transition: transform 0.4s ease-out;
     }
     &:hover {

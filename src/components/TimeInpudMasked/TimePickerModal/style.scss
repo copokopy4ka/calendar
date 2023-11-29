@@ -1,0 +1,47 @@
+@import 'shared/styles/variables';
+
+.time-modal-content {
+  position: fixed;
+  background-color: $white;
+  height: 35vh;
+  width: 180px;
+  padding: 10px;
+  z-index: 5;
+  transition: transform 0.15s linear;
+  transform: scale(0);
+  // transform-origin: top right;
+  border-radius: 4px;
+  box-shadow: 0 0 10px 1px $light-gray;
+
+  &__lists-wrapper {
+    height: 80%;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  &__confirm-button {
+    text-transform: uppercase;
+    display: block;
+    margin: 0 auto;
+    width: 60%;
+    height: 30px;
+    color: $blue;
+    background-color: $white;
+    border-radius: 4px;
+    transition: color 0.2s linear, background-color 0.2s linear;
+
+    &:hover {
+      color: $white;
+      background-color: $blue;
+    }
+  }
+
+  &.open {
+    transform: scale(1);
+  }
+}
