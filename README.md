@@ -46,12 +46,4 @@ After starting the application, you can:
 - Select a day in the calendar by clicking on it, and you can add an event for that day by clicking on the blue button with a plus sign in the upper left.
 - In order to change an already created event, just click on it and change any fields in the input form. You can also delete this event here.
 
-> When the work on the project was almost finished, I turned to
-> the best Quality Assurance for UI/UX testing - my Mom!
-> I asked to look at the app in the browser
-> (with which she is very careful not to delete anything on the Internet..),
-> to understand what it is in front of her and what it can do, and gave no hints!
-> The application passed the quality check with almost no comments,
-> so our Calendar is recommended by my Mom.
-
 _✨ I wish you all the best. ✨_
