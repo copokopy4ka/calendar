@@ -9,7 +9,7 @@ This is the 'Calendar' project, a web application designed to help users manage 
 - Interactive calendar view
 - Add, edit, and delete events
 - User-friendly interface
-- ✨ Magic of time traveling! ✨
+- ✨Magic of time traveling✨
 
 ## Technology Stack
 
@@ -19,6 +19,8 @@ This project is built using the following technologies:
 - **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
 - **Redux Toolkit**: A toolset for efficient Redux development.
 - **Sass**: A preprocessor scripting language that is interpreted or compiled into CSS.
+- **Express**:  A Node.js web application framework.
+- **MongoDB**: A noSQL document database.
 
 ## Installation and Setup
 
@@ -45,5 +47,11 @@ After starting the application, you can:
 - View the calendar on the main page. You will be able to appreciate the beautiful interface and will definitely enjoy using it.
 - Select a day in the calendar by clicking on it, and you can add an event for that day by clicking on the blue button with a plus sign in the upper left.
 - In order to change an already created event, just click on it and change any fields in the input form. You can also delete this event here.
+
+## Additional features
+- Added server handling of users events data. All events are saves for created user, based on requested side 'user-agent' header.
+- Added datepicker and time pickrer for convenience, allso added loader while requests are in loading status for in async mode.
+- Forms have validations for all common cases of invalid values with both disabling of submit button and error messages under fields.
+- Inputs with mask for date and time inputs (custom mask logic for time input).
 
 _✨ I wish you all the best. ✨_
