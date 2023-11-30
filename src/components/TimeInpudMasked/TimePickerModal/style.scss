@@ -3,7 +3,7 @@
 .time-modal-content {
   position: fixed;
   background-color: $white;
-  height: 40vh;
+  height: 42vh;
   width: 180px;
   padding: 10px;
   z-index: 5;
@@ -24,7 +24,7 @@
   }
 
   &__lists-wrapper {
-    height: 80%;
+    height: 75%;
     width: 100%;
     display: grid;
     grid-template-rows: 1fr;
