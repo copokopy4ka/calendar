@@ -56,9 +56,10 @@ export const useUserEventForm = (
     if (eventData) {
       const createdAt = dayjs(eventData.createdAt);
       const updatedAt = dayjs(eventData.updatedAt);
+
       return updatedAt.isAfter(createdAt)
-        ? `Updated at: ${updatedAt.format(DATE_FORMAT.DATE_TIME)}`
-        : `Created at: ${createdAt.format(DATE_FORMAT.DATE_TIME)}`;
+        ? `Updated at: ${updatedAt.format(DATE_FORMAT.DATE)} ${updatedAt.get('hour')}:${updatedAt.get('minutes')}`
+        : `Created at: ${createdAt.format(DATE_FORMAT.DATE)} ${createdAt.get('hour')}:${createdAt.get('minutes')}`;
     }
   }, [eventData]);
 
