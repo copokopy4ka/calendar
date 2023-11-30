@@ -4,6 +4,8 @@ import storage from 'core/services/localStorageService';
 import { SETTINGS } from 'constants/settings';
 import { createUserOnDB, getEvents, getEventsDataBase, updateCurrentDate } from 'store/events-entity/actions';
 import { useThunkDispatch } from 'shared/hooks/useThunkDispatch';
+import { useSelector } from 'react-redux';
+import { selectorGetIsLoading } from 'store/events-entity/selectors';
 
 /**
  * Custom hook for initializing application configurations.
@@ -15,6 +17,8 @@ import { useThunkDispatch } from 'shared/hooks/useThunkDispatch';
  * @param {boolean} isUsingLocalStorage - Flag to determine whether to fetch events
  *                                        from local storage or from a database.
  *
+ * @returns {boolean} a boolean indicator of loading status for visual interaction with user.
+ *
  * @remarks
  * - The hook uses the `useThunkDispatch` custom hook for dispatching Redux actions.
  * - It uses `useEffect` to perform side effects for loading the initial configurations.
@@ -22,8 +26,9 @@ import { useThunkDispatch } from 'shared/hooks/useThunkDispatch';
  *   to either load events from the local storage or from a database.
  * - It also ensures that the last viewed date is updated in the storage.
  */
-export const useInitialConfigurations = (isUsingLocalStorage: boolean) => {
+export const useInitialConfigurations = (isUsingLocalStorage: boolean): boolean => {
   const dispatch = useThunkDispatch();
+  const isLoading = useSelector(selectorGetIsLoading);
 
   useEffect(() => {
     const savedDate = storage.getData(SETTINGS.LAST_VIEWED_DATE);
@@ -51,4 +56,6 @@ export const useInitialConfigurations = (isUsingLocalStorage: boolean) => {
       dispatch(createUserOnDB());
     }
   }, [dispatch, isUsingLocalStorage]);
+
+  return isLoading;
 };

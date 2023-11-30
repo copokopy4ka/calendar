@@ -2,10 +2,11 @@ import { SETTINGS } from 'constants/settings';
 import storage from 'core/services/localStorageService';
 import { UseDatePickerDataResponse } from 'core/types/custom-hooks.type';
 import dayjs from 'dayjs';
-import { useCallback, useEffect, useState } from 'react';
+import { MainLayoutContext } from 'layouts/MainLayout/MainLayout.context';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useThunkDispatch } from 'shared/hooks/useThunkDispatch';
-import { updateCurrentDate } from 'store/events-entity/actions';
+import { getEvents, getEventsDataBase, updateCurrentDate } from 'store/events-entity/actions';
 import { selectorGetCurrentDate } from 'store/events-entity/selectors';
 
 /**
@@ -41,6 +42,7 @@ import { selectorGetCurrentDate } from 'store/events-entity/selectors';
  * // These can now be used in a date picker component to manage state and interactions.
  */
 export const useDatePickerData = (handleClose: () => void): UseDatePickerDataResponse => {
+  const { isUsingLocalStorage } = useContext(MainLayoutContext);
   const dispatch = useThunkDispatch();
   const currentDate = useSelector(selectorGetCurrentDate);
 
@@ -57,27 +59,37 @@ export const useDatePickerData = (handleClose: () => void): UseDatePickerDataRes
   }, []);
 
   const handlePickMonth = useCallback(
-    (month: number) => {
+    async (month: number) => {
       setMonth(month);
       if (currentDate) {
         const newDate = dayjs(currentDate).set('month', month).format();
         dispatch(updateCurrentDate(newDate));
+        if (isUsingLocalStorage) {
+          dispatch(getEvents(newDate));
+        } else {
+          await dispatch(getEventsDataBase(newDate));
+        }
         storage.update(SETTINGS.LAST_VIEWED_DATE, newDate);
       }
     },
-    [currentDate, dispatch]
+    [currentDate, dispatch, isUsingLocalStorage]
   );
 
   const handlePickYear = useCallback(
-    (year: number) => {
+    async (year: number) => {
       setYear(year);
       if (currentDate) {
         const newDate = dayjs(currentDate).set('year', year).format();
         dispatch(updateCurrentDate(newDate));
+        if (isUsingLocalStorage) {
+          dispatch(getEvents(newDate));
+        } else {
+          await dispatch(getEventsDataBase(newDate));
+        }
         storage.update(SETTINGS.LAST_VIEWED_DATE, newDate);
       }
     },
-    [currentDate, dispatch]
+    [currentDate, dispatch, isUsingLocalStorage]
   );
 
   const handleConfirm = useCallback(() => {

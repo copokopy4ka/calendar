@@ -10,6 +10,7 @@ import {
   createEventDataBaseOperation,
   updateEventDataBaseOperation,
   deleteEventDataBaseOperation,
+  pendingOperation,
 } from './operations';
 import {
   updateCurrentDate,
@@ -36,6 +37,7 @@ const initialState: EventsState = {
   },
   currentDate: null,
   errorMessage: null,
+  isLoading: false,
 };
 
 export const eventsStore = createSlice({
@@ -57,14 +59,19 @@ export const eventsStore = createSlice({
       // delete event
       .addCase(deleteEvent, deleteEventOperation)
       //get events DB
+      .addCase(getEventsDataBase.pending, pendingOperation)
       .addCase(getEventsDataBase.fulfilled, getEventsOperation)
       // get event by idDB
+      .addCase(getEventByIdDataBase.pending, pendingOperation)
       .addCase(getEventByIdDataBase.fulfilled, getEventByIdOperation)
       // create event DB
+      .addCase(createEventDataBase.pending, pendingOperation)
       .addCase(createEventDataBase.fulfilled, createEventDataBaseOperation)
       // update event DB
+      .addCase(updateEventDataBase.pending, pendingOperation)
       .addCase(updateEventDataBase.fulfilled, updateEventDataBaseOperation)
       // delete event DB
+      .addCase(deleteEventDataBase.pending, pendingOperation)
       .addCase(deleteEventDataBase.fulfilled, deleteEventDataBaseOperation);
   },
 });

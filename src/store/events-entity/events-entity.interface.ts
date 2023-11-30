@@ -5,4 +5,5 @@ export interface EventsState {
   currentEvent: UserEvent;
   currentDate: string | null;
 	errorMessage: string | null;
+	isLoading: boolean;
 }
