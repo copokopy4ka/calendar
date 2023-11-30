@@ -40,11 +40,15 @@ export const TimePickerModal: FC<TimePickerModalProps> = ({ isOpen, handleClose,
       {anchorElementRect && (
         <div
           style={{
-            bottom: anchorElementRect.height * 3,
+            top: anchorElementRect.top - anchorElementRect.height,
             left: anchorElementRect.left - anchorElementRect.width / 2,
           }}
           className={clsx('time-modal-content', { open: isOpen })}
         >
+          <div className={clsx('time-modal-content__title-wrapper', { open: isOpen })}>
+            <span className={clsx('time-modal-content__title-hours', { open: isOpen })}>HH</span>
+            <span className={clsx('time-modal-content__title-minutes', { open: isOpen })}>mm</span>
+          </div>
           <div className={clsx('time-modal-content__lists-wrapper')}>
             <HoursList currentPickedHour={hour} handlePickHour={handlePickHour} />
             <MinutesList currentPickedMinute={minute} handlePickMinute={handlePickMinute} />

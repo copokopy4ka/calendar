@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useContext, useRef } from 'react';
 import clsx from 'clsx';
 import { ArrowButtonsControl } from './ArrowButtonsControl/ArrowButtonsControl';
 import { CalendarButton } from './CalendarButton/CalendarButton';
@@ -8,11 +8,13 @@ import './style.scss';
 import { SETTINGS } from 'constants/settings';
 import storage from 'core/services/localStorageService';
 import dayjs from 'dayjs';
-import { updateCurrentDate } from 'store/events-entity/actions';
-import { useDispatch } from 'react-redux';
+import { getEvents, getEventsDataBase, updateCurrentDate } from 'store/events-entity/actions';
+import { useThunkDispatch } from 'shared/hooks/useThunkDispatch';
+import { MainLayoutContext } from 'layouts/MainLayout/MainLayout.context';
 
 export const DatePicker = () => {
-  const dispatch = useDispatch();
+  const { isUsingLocalStorage } = useContext(MainLayoutContext);
+  const dispatch = useThunkDispatch();
   const { open, isOpen, close } = useModal();
   const datePickerRef = useRef<HTMLDivElement>(null);
 
@@ -20,7 +22,12 @@ export const DatePicker = () => {
     storage.remove(SETTINGS.SELECTED_DAY);
     const today = dayjs().format();
     dispatch(updateCurrentDate(today));
-  }, [dispatch]);
+    if (isUsingLocalStorage) {
+      dispatch(getEvents(today));
+    } else {
+      dispatch(getEventsDataBase(today));
+    }
+  }, [dispatch, isUsingLocalStorage]);
 
   return (
     <div ref={datePickerRef} className={clsx('date-picker')}>

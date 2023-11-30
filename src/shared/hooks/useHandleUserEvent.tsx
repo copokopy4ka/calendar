@@ -1,43 +1,47 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { CreateUserEventDto, UpdateUserEventDto, UserEvent } from 'core/types/events.type';
-import { useDispatch } from 'react-redux';
-import { createEvent, deleteEvent, updateEvent } from 'store/events-entity/actions';
+import {
+  createEvent,
+  createEventDataBase,
+  deleteEvent,
+  deleteEventDataBase,
+  updateEvent,
+  updateEventDataBase,
+} from 'store/events-entity/actions';
 import { useModal } from 'shared/hooks/useModal';
 import { FieldValues } from 'react-hook-form';
 import { formateInputDateValue } from 'utils/helpers';
 import { UseHandleUserEventResponse } from 'core/types/custom-hooks.type';
+import { useThunkDispatch } from 'shared/hooks/useThunkDispatch';
+import { MainLayoutContext } from 'layouts/MainLayout/MainLayout.context';
 
 /**
- * A custom hook for handling user events in an application.
+ * Custom hook for managing user event interactions.
  *
- * This hook manages the selection, creation, updating, and deletion of user events. It also controls
- * a modal's state for displaying event details and forms. The hook leverages Redux for dispatching
- * event-related actions.
+ * This hook provides functionalities for handling user event operations like
+ * selecting an event, submitting event form data, and deleting an event. It
+ * integrates modal control and event state management.
  *
- * @returns {object} An object containing:
- * - `selectedEvent`: The currently selected event or null if no event is selected.
- * - `open`: A function to open the modal.
- * - `isOpen`: A boolean state indicating whether the modal is open.
- * - `close`: A function to close the modal.
- * - `handleEventClick`: A function to select an event and open the modal for event details.
- * - `handleSubmitForm`: A function to submit the event form, handling both creation and updating of events.
- * - `handleDeleteEvent`: A function to delete a specific event by its id.
+ * @returns {UseHandleUserEventResponse} An object containing:
+ * - selectedEvent: The currently selected event or null.
+ * - open: Function to open the modal.
+ * - isOpen: State variable indicating whether the modal is open.
+ * - close: Function to close the modal.
+ * - handleEventClick: Function to handle event selection.
+ * - handleSubmitForm: Function to handle form submission for event creation or update.
+ * - handleDeleteEvent: Function to handle the deletion of an event.
  *
- * @example
- * const {
- *   selectedEvent,
- *   open,
- *   isOpen,
- *   close,
- *   handleEventClick,
- *   handleSubmitForm,
- *   handleDeleteEvent
- * } = useHandleUserEvent();
- * // These can now be used in components to manage user events and modal interactions.
+ * @remarks
+ * - The hook uses the `useThunkDispatch` hook for dispatching Redux actions.
+ * - It utilizes the `useModal` hook for modal operations.
+ * - The `useState` and `useCallback` hooks are used for managing state and memoizing functions respectively.
+ * - The hook also uses `useContext` to access the `isUsingLocalStorage` flag from `MainLayoutContext`.
+ * - It reacts to the modal open state to reset the selected event when the modal is closed.
  */
 export const useHandleUserEvent = (): UseHandleUserEventResponse => {
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
   const { open, isOpen, close } = useModal();
+  const { isUsingLocalStorage } = useContext(MainLayoutContext);
   const [selectedEvent, setSelectedEvent] = useState<UserEvent | null>(null);
 
   const handleEventClick = useCallback(
@@ -58,7 +62,13 @@ export const useHandleUserEvent = (): UseHandleUserEventResponse => {
         };
         values.time && (updateEventData.time = values.time);
         values.description && (updateEventData.description = values.description);
-        dispatch(updateEvent(updateEventData));
+
+        if (isUsingLocalStorage) {
+          dispatch(updateEvent(updateEventData));
+        } else {
+          dispatch(updateEventDataBase(updateEventData));
+        }
+
         setSelectedEvent(null);
       } else {
         const createEventData: CreateUserEventDto = {
@@ -67,19 +77,28 @@ export const useHandleUserEvent = (): UseHandleUserEventResponse => {
         };
         values.time && (createEventData.time = values.time);
         values.description && (createEventData.description = values.description);
-        dispatch(createEvent(createEventData));
+
+        if (isUsingLocalStorage) {
+          dispatch(createEvent(createEventData));
+        } else {
+          dispatch(createEventDataBase(createEventData));
+        }
       }
       close();
     },
-    [close, dispatch, selectedEvent]
+    [close, dispatch, isUsingLocalStorage, selectedEvent]
   );
 
   const handleDeleteEvent = useCallback(
     (id: string) => {
-      dispatch(deleteEvent(id));
+      if (isUsingLocalStorage) {
+        dispatch(deleteEvent(id));
+      } else {
+        dispatch(deleteEventDataBase(id));
+      }
       setSelectedEvent(null);
     },
-    [dispatch]
+    [dispatch, isUsingLocalStorage]
   );
 
   useEffect(() => {
