@@ -3,7 +3,8 @@ import storage from 'core/services/localStorageService';
 import { UseDatePickerDataResponse } from 'core/types/custom-hooks.type';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useThunkDispatch } from 'shared/hooks/useThunkDispatch';
 import { updateCurrentDate } from 'store/events-entity/actions';
 import { selectorGetCurrentDate } from 'store/events-entity/selectors';
 
@@ -40,7 +41,7 @@ import { selectorGetCurrentDate } from 'store/events-entity/selectors';
  * // These can now be used in a date picker component to manage state and interactions.
  */
 export const useDatePickerData = (handleClose: () => void): UseDatePickerDataResponse => {
-  const dispatch = useDispatch();
+  const dispatch = useThunkDispatch();
   const currentDate = useSelector(selectorGetCurrentDate);
 
   const [isMonthsPickerActive, setIsMonthsPickerActive] = useState(true);

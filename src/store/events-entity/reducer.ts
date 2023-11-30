@@ -7,8 +7,23 @@ import {
   updateEventOperation,
   createEventOperation,
   deleteEventOperation,
+  createEventDataBaseOperation,
+  updateEventDataBaseOperation,
+  deleteEventDataBaseOperation,
 } from './operations';
-import { updateCurrentDate, getEvents, getEventById, createEvent, updateEvent, deleteEvent } from './actions';
+import {
+  updateCurrentDate,
+  getEvents,
+  getEventById,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+  getEventsDataBase,
+  getEventByIdDataBase,
+  createEventDataBase,
+  updateEventDataBase,
+  deleteEventDataBase,
+} from './actions';
 
 const initialState: EventsState = {
   events: [],
@@ -33,14 +48,24 @@ export const eventsStore = createSlice({
       .addCase(updateCurrentDate, updateDateOperation)
       //get events
       .addCase(getEvents, getEventsOperation)
-      // get by id
+      // get event by id
       .addCase(getEventById, getEventByIdOperation)
-      // create
+      // create event
       .addCase(createEvent, createEventOperation)
-      // update
+      // update event
       .addCase(updateEvent, updateEventOperation)
-      // delete
-      .addCase(deleteEvent, deleteEventOperation);
+      // delete event
+      .addCase(deleteEvent, deleteEventOperation)
+      //get events DB
+      .addCase(getEventsDataBase.fulfilled, getEventsOperation)
+      // get event by idDB
+      .addCase(getEventByIdDataBase.fulfilled, getEventByIdOperation)
+      // create event DB
+      .addCase(createEventDataBase.fulfilled, createEventDataBaseOperation)
+      // update event DB
+      .addCase(updateEventDataBase.fulfilled, updateEventDataBaseOperation)
+      // delete event DB
+      .addCase(deleteEventDataBase.fulfilled, deleteEventDataBaseOperation);
   },
 });
 

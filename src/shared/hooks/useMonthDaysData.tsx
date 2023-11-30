@@ -3,28 +3,28 @@ import storage from 'core/services/localStorageService';
 import { MonthActiveDay, MonthGridItem } from 'core/types/calendar.type';
 import { UseMonthDaysDataResponse } from 'core/types/custom-hooks.type';
 import { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectorGetCurrentDate, selectorGetEvents } from 'store/events-entity/selectors';
 import { getMonthDays, updateDaysWithEvents } from 'utils/helpers';
 
 /**
- * A custom hook for managing calendar month days and interactions.
+ * Custom hook for managing monthly calendar data.
  *
- * This hook is responsible for handling the data related to the days in a specific
- * month. It fetches and updates the days list based on the current date and associated
- * events. It also manages the selection of a specific day.
+ * This hook facilitates the management of calendar days within a specific month,
+ * including the retrieval and updating of days based on the current date and
+ * events. It also manages the state of the currently selected day.
  *
  * @returns {UseMonthDaysDataResponse} An object containing:
- * - `daysList`: An array of `MonthGridItem` representing each day in the current month.
- * - `selectedDay`: The currently selected day as `MonthActiveDay` or null if no day is selected.
- * - `handleDayClick`: A function to handle the selection of a day. It updates the selected day and saves it in local storage.
+ * - daysList: Array of MonthGridItem, representing the days in the current month.
+ * - selectedDay: The currently selected day of the month (MonthActiveDay) or null if no day is selected.
+ * - handleDayClick: A function to handle the selection of a day.
  *
- * @example
- * const { daysList, selectedDay, handleDayClick } = useMonthDaysData();
- * // Use these values and functions in a calendar component to display month days and manage day selection.
+ * @remarks
+ * - The hook uses the `useSelector` hook to access the current date and events list from the Redux store.
+ * - The `useState` hook is used to manage the state of the days list and the selected day.
+ * - The `useEffect` hook is used to update the days list and the selected day when the current date or events list changes.
  */
 export const useMonthDaysData = (): UseMonthDaysDataResponse => {
-  const dispatch = useDispatch();
   const currentDate = useSelector(selectorGetCurrentDate);
   const eventsList = useSelector(selectorGetEvents);
 
@@ -45,7 +45,7 @@ export const useMonthDaysData = (): UseMonthDaysDataResponse => {
       setDaysList(updateDaysWithEvents(daysList, eventsList));
       setSelectedDay(activeDay);
     }
-  }, [currentDate, dispatch, eventsList]);
+  }, [currentDate, eventsList]);
 
   return { daysList, selectedDay, handleDayClick };
 };

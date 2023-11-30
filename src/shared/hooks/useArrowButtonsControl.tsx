@@ -1,12 +1,14 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import dayjs from 'dayjs';
 import storage from 'core/services/localStorageService';
 import { SETTINGS } from 'constants/settings';
 import { DATE_FORMAT } from 'constants/date-format';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectorGetCurrentDate } from 'store/events-entity/selectors';
-import { updateCurrentDate } from 'store/events-entity/actions';
+import { getEvents, getEventsDataBase, updateCurrentDate } from 'store/events-entity/actions';
 import { UseArrowButtonsControlResponse } from 'core/types/custom-hooks.type';
+import { useThunkDispatch } from 'shared/hooks/useThunkDispatch';
+import { MainLayoutContext } from 'layouts/MainLayout/MainLayout.context';
 
 /**
  * A custom hook for controlling arrow button navigation in a date context.
@@ -26,26 +28,37 @@ import { UseArrowButtonsControlResponse } from 'core/types/custom-hooks.type';
  * // You can now use these in your component to display the date and control the navigation.
  */
 export const useArrowButtonsControl = (): UseArrowButtonsControlResponse => {
-  const dispatch = useDispatch();
+  const { isUsingLocalStorage } = useContext(MainLayoutContext);
+  const dispatch = useThunkDispatch();
   const currentDate = useSelector(selectorGetCurrentDate);
 
   const dateText = useMemo(() => dayjs(currentDate).format(DATE_FORMAT.MONTH_YEAR), [currentDate]);
 
-  const handleNextButtonClick = useCallback(() => {
+  const handleNextButtonClick = useCallback(async () => {
     if (currentDate) {
       const newDate = dayjs(currentDate).add(1, 'month').format();
       dispatch(updateCurrentDate(newDate));
+      if (isUsingLocalStorage) {
+        dispatch(getEvents(newDate));
+      } else {
+        await dispatch(getEventsDataBase(newDate));
+      }
       storage.update(SETTINGS.LAST_VIEWED_DATE, newDate);
     }
-  }, [currentDate, dispatch]);
+  }, [currentDate, dispatch, isUsingLocalStorage]);
 
-  const handlePrevButtonClick = useCallback(() => {
+  const handlePrevButtonClick = useCallback(async () => {
     if (currentDate) {
       const newDate = dayjs(currentDate).subtract(1, 'month').format();
       dispatch(updateCurrentDate(newDate));
+      if (isUsingLocalStorage) {
+        dispatch(getEvents(newDate));
+      } else {
+        await dispatch(getEventsDataBase(newDate));
+      }
       storage.update(SETTINGS.LAST_VIEWED_DATE, newDate);
     }
-  }, [currentDate, dispatch]);
+  }, [currentDate, dispatch, isUsingLocalStorage]);
 
   return {
     dateText,

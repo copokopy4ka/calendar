@@ -2,9 +2,9 @@
   "name": "calendar",
   "version": "0.1.0",
   "private": true,
-	"engines": {
-		"node": "18.x"
-	},
+  "engines": {
+    "node": "18.x"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
     "@testing-library/jest-dom": "^5.17.0",
@@ -14,6 +14,7 @@
     "@types/node": "^16.18.64",
     "@types/react": "^18.2.38",
     "@types/react-dom": "^18.2.17",
+    "axios": "^1.6.2",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",
     "react": "^18.2.0",

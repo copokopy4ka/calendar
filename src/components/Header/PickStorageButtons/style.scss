@@ -1,0 +1,32 @@
+@import 'shared/styles/variables';
+
+.pick-storage-buttons {
+  display: flex;
+  gap: 30px;
+  margin-right: 100px;
+  &__button {
+    position: relative;
+    padding: 10px;
+    width: 14vw;
+    max-width: 180px;
+    font-size: 12px;
+    white-space: nowrap;
+    border-radius: 4px;
+    box-shadow: 0 0 10px 2px $light-gray;
+    border: 1px solid $light-gray;
+    overflow: hidden;
+    color: $gray;
+    background-color: transparent;
+    transition: background-color 0.2s linear, box-shadow 0.2s linear, color 0.2s linear;
+
+    &.active {
+      background-color: $light-green;
+      border-color: $light-blue;
+      color: $blue;
+    }
+
+    &:hover {
+      box-shadow: 0 0 10px 5px $light-gray;
+    }
+  }
+}
