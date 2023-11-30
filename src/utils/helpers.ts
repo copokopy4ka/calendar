@@ -209,7 +209,7 @@ export const formateDateForInputMasked = (date: string): string => dayjs(date).f
  *
  * Note: If the date format is not in the expected formats, the function's behavior may be unpredictable.
  */
-export const formateInputDateValue = (value: string, time?: string) => {
+export const formateInputDateValue = (value: string, time?: string): string => {
   let changedDate: string | Dayjs = value.split('-').reverse().join('-');
   if (changedDate.includes('.')) {
     changedDate = changedDate.split('.').reverse().join('-');
@@ -219,5 +219,5 @@ export const formateInputDateValue = (value: string, time?: string) => {
     changedDate = `${changedDate} ${time}`;
   }
 
-  return dayjs(changedDate).format();
+  return dayjs(changedDate.replace('_', '')).format();
 };
