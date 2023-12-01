@@ -49,9 +49,7 @@ After starting the application, you can:
 - In order to change an already created event, just click on it and change any fields in the input form. You can also delete this event here.
 
 ## Additional features
-- Added server handling of users events data. All events are saves for created user, based on requested side 'user-agent' header.
-- Added datepicker and time pickrer for convenience, allso added loader while requests are in loading status for in async mode.
-- Forms have validations for all common cases of invalid values with both disabling of submit button and error messages under fields.
-- Inputs with mask for date and time inputs (custom mask logic for time input).
+- Added server handling of users events data and storing them in database. 
+- Added time picker on form for convenience and loading indicator.
 
 _✨ I wish you all the best. ✨_
